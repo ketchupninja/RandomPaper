@@ -2,6 +2,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import os
+import random
 
 class Paper:
     def __init__(self):
@@ -11,12 +12,19 @@ class Paper:
         self.pdfLink = ""
         self.primarySubject = ""
         
-#Will need to be changed
-driver = webdriver.Chrome(executable_path="C:\\Users\\matthew\\Downloads\\chromedriver_win32\\chromedriver.exe")
 
-#Placeholder for now - subject should be chosen randomly later
-url = 'https://arxiv.org/list/q-bio/new'
+myPath = os.getcwd() + "\\chromedriver.exe"
+driver = webdriver.Chrome(executable_path=myPath)
 
+
+
+
+types = ['gr-qc', 'hep-ex', 'hep-lat', 'hep-ph', 'hep-th', 'math-ph', 'nlin', 'nucl-ex', 'nucl-th','physics','quant-ph', 'astro-ph', 'math', 'q-bio', 'q-fin', 'stat', 'eess', 'econ']
+
+x = random.randint(0, (len(types) - 1))
+
+subj = types[x]
+url = 'https://arxiv.org/list/' + subj + '/new'
 driver.get(url)
 
 
@@ -69,13 +77,16 @@ for i in range(0, len(abstracts)):
     papers.append(p)
     
     
-for p in papers:
-    print(p.title)
-    print(p.authors)
-    print(p.primarySubject)
-    print(p.abstract)
-    print(p.pdfLink)
-    print("---")
+x = random.randint(0, (len(papers) - 1))
+
+#p is the randomly selected paper
+p = papers[x]
+
+print(p.title)
+print(p.authors)
+print(p.primarySubject)
+print(p.abstract)
+print(p.pdfLink)
     
 
         
